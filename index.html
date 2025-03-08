@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CMS Data Analysis</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.1.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -128,18 +130,18 @@
     <div class="chart-container">
         <h2>Provider Specialty Distribution</h2>
         <div class="zoom-instructions">Tip: Click and drag to zoom in. Double-click to reset zoom.</div>
-        <div id="specialty-chart" style="height:600px;"></div>
+        <div id="specialty-chart" style="height:600px; width:100%;"></div>
     </div>
 
     <div class="chart-container">
         <h2>Payment Analysis</h2>
-        <div id="payment-chart" style="height:600px;"></div>
+        <div id="payment-chart" style="height:600px; width:100%;"></div>
     </div>
 
     <div class="chart-container">
         <h2>Correlation Analysis</h2>
         <div class="zoom-instructions">Tip: Hover over the heatmap to see detailed correlations</div>
-        <img src="visualizations/correlation_heatmap.png" alt="Correlation Heatmap" style="width: 100%; max-width: 800px; margin: 20px auto; display: block;">
+        <img src="./visualizations/correlation_heatmap.png" alt="Correlation Heatmap" style="width: 100%; max-width: 800px; margin: 20px auto; display: block;">
         <div class="insight-box">
             <div class="insight-title">Key Correlations:</div>
             <ul>
@@ -151,55 +153,59 @@
     </div>
 
     <script>
-        // Load the specialty distribution data
-        var specialtyData = {
-            values: [254,247,111,54,41,35,30,29,19,14,14,13,10,9,8,5,4,4,3,3,3,3,3,2,2,2,2,1,1,1,1,1,1],
-            labels: ["Internal Medicine","Family Practice","Cardiology","Gastroenterology","Neurology","Urology","Physician Assistant","Nurse Practitioner","Nephrology","Interventional Cardiology","Diagnostic Radiology","Anesthesiology","Infectious Disease","Certified Registered Nurse Anesthetist (CRNA)","Clinical Cardiac Electrophysiology","Audiologist","General Practice","Otolaryngology","General Surgery","Ophthalmology","Thoracic Surgery","Physical Therapist in Private Practice","Dermatology","Podiatry","Obstetrics & Gynecology","Chiropractic","Licensed Clinical Social Worker","Cardiac Surgery","Mass Immunizer Roster Biller","Plastic and Reconstructive Surgery","Psychologist, Clinical","Interventional Radiology","Advanced Heart Failure and Transplant Cardiology"],
-            type: 'pie',
-            textinfo: 'percent+label',
-            hoverinfo: 'label+percent+value',
-            hole: 0.4
-        };
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load the specialty distribution data
+            var specialtyData = {
+                values: [254,247,111,54,41,35,30,29,19,14,14,13,10,9,8,5,4,4,3,3,3,3,3,2,2,2,2,1,1,1,1,1,1],
+                labels: ["Internal Medicine","Family Practice","Cardiology","Gastroenterology","Neurology","Urology","Physician Assistant","Nurse Practitioner","Nephrology","Interventional Cardiology","Diagnostic Radiology","Anesthesiology","Infectious Disease","Certified Registered Nurse Anesthetist (CRNA)","Clinical Cardiac Electrophysiology","Audiologist","General Practice","Otolaryngology","General Surgery","Ophthalmology","Thoracic Surgery","Physical Therapist in Private Practice","Dermatology","Podiatry","Obstetrics & Gynecology","Chiropractic","Licensed Clinical Social Worker","Cardiac Surgery","Mass Immunizer Roster Biller","Plastic and Reconstructive Surgery","Psychologist, Clinical","Interventional Radiology","Advanced Heart Failure and Transplant Cardiology"],
+                type: 'pie',
+                textinfo: 'percent+label',
+                hoverinfo: 'label+percent+value',
+                hole: 0.4
+            };
 
-        // Create the specialty distribution chart
-        Plotly.newPlot('specialty-chart', [specialtyData], {
-            title: 'Provider Specialty Distribution',
-            annotations: [{
-                text: 'Provider<br>Specialties',
-                showarrow: false,
-                font: {
-                    size: 20
+            // Create the specialty distribution chart
+            Plotly.newPlot('specialty-chart', [specialtyData], {
+                title: 'Provider Specialty Distribution',
+                annotations: [{
+                    text: 'Provider<br>Specialties',
+                    showarrow: false,
+                    font: {
+                        size: 20
+                    },
+                    x: 0.5,
+                    y: 0.5
+                }],
+                responsive: true
+            });
+
+            // Create sample payment analysis data
+            var paymentData = {
+                x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                y: [65.2, 68.4, 70.1, 71.8, 73.2, 71.4],
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'Average Payment ($)',
+                line: {
+                    color: '#2c3e50',
+                    width: 3
                 },
-                x: 0.5,
-                y: 0.5
-            }]
-        });
+                marker: {
+                    size: 8
+                }
+            };
 
-        // Create sample payment analysis data
-        var paymentData = {
-            x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            y: [65.2, 68.4, 70.1, 71.8, 73.2, 71.4],
-            type: 'scatter',
-            mode: 'lines+markers',
-            name: 'Average Payment ($)',
-            line: {
-                color: '#2c3e50',
-                width: 3
-            },
-            marker: {
-                size: 8
-            }
-        };
-
-        // Create the payment analysis chart
-        Plotly.newPlot('payment-chart', [paymentData], {
-            title: 'Average Payment Trends',
-            xaxis: {
-                title: 'Month'
-            },
-            yaxis: {
-                title: 'Average Payment ($)'
-            }
+            // Create the payment analysis chart
+            Plotly.newPlot('payment-chart', [paymentData], {
+                title: 'Average Payment Trends',
+                xaxis: {
+                    title: 'Month'
+                },
+                yaxis: {
+                    title: 'Average Payment ($)'
+                },
+                responsive: true
+            });
         });
     </script>
 </body>
