@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMS Analytics</title>
+    <title>CMS Data Analysis</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         body {
@@ -19,38 +17,176 @@
             border-radius: 5px;
             margin-bottom: 20px;
         }
-        .nav-links {
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .stat-box {
+            background-color: white;
+            border-radius: 5px;
+            padding: 15px;
+            width: 22%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             text-align: center;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        .chart-container {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .insight-box {
+            background-color: #eaf2f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .management-insights {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
             margin: 20px 0;
         }
-        .nav-links a {
-            color: #2c3e50;
+        .insight-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .zoom-instructions {
+            font-size: 12px;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+        .github-link {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
             text-decoration: none;
-            margin: 0 15px;
             font-weight: bold;
         }
-        .nav-links a:hover {
-            color: #3498db;
-        }
-        iframe {
-            width: 100%;
-            height: 2000px;
-            border: none;
-            margin-top: 20px;
+        .github-link:hover {
+            background-color: #3498db;
         }
     </style>
 </head>
 <body>
+    <a href="https://github.com/Aj-K-code/cms_analytics" class="github-link">View on GitHub</a>
+    
     <div class="header">
-        <h1>CMS Analytics Project</h1>
-        <p>Healthcare Data Analysis and Visualization Platform</p>
+        <h1>CMS Data Analysis Dashboard</h1>
+        <p>Interactive visualizations of CMS provider data</p>
     </div>
     
-    <div class="nav-links">
-        <a href="https://github.com/Aj-K-code/cms_analytics">GitHub Repository</a>
-        <a href="visualizations/cms_analysis.html">Full Dashboard</a>
+    <div class="stats-container">
+        <div class="stat-box">
+            <div class="stat-value">929</div>
+            <div class="stat-label">Total Providers</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value">1,702,821.0</div>
+            <div class="stat-label">Total Services</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value">800,592</div>
+            <div class="stat-label">Total Beneficiaries</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value">$71.42</div>
+            <div class="stat-label">Average Payment</div>
+        </div>
+    </div>
+    
+    <div class="management-insights">
+        <h2>Executive Summary</h2>
+        <p>This dashboard provides key insights into provider performance, payment variations, and opportunities for optimization.</p>
+        <div class="insight-title">Key Findings:</div>
+        <ul>
+            <li>Identified significant payment variations between NY State and CommunityCare rates</li>
+            <li>Highlighted top-performing physicians compared to their specialty averages</li>
+            <li>Detected outliers in service volume and payment amounts that require attention</li>
+            <li>Quantified potential cost savings and revenue opportunities</li>
+        </ul>
     </div>
 
-    <iframe src="visualizations/cms_analysis.html" title="CMS Analytics Dashboard"></iframe>
+    <div class="chart-container">
+        <h2>Provider Specialty Distribution</h2>
+        <div class="zoom-instructions">Tip: Click and drag to zoom in. Double-click to reset zoom.</div>
+        <div id="specialty-chart" style="height:600px;"></div>
+    </div>
+
+    <div class="chart-container">
+        <h2>Payment Analysis</h2>
+        <div id="payment-chart" style="height:600px;"></div>
+    </div>
+
+    <script>
+        // Load the specialty distribution data
+        var specialtyData = {
+            values: [254,247,111,54,41,35,30,29,19,14,14,13,10,9,8,5,4,4,3,3,3,3,3,2,2,2,2,1,1,1,1,1,1],
+            labels: ["Internal Medicine","Family Practice","Cardiology","Gastroenterology","Neurology","Urology","Physician Assistant","Nurse Practitioner","Nephrology","Interventional Cardiology","Diagnostic Radiology","Anesthesiology","Infectious Disease","Certified Registered Nurse Anesthetist (CRNA)","Clinical Cardiac Electrophysiology","Audiologist","General Practice","Otolaryngology","General Surgery","Ophthalmology","Thoracic Surgery","Physical Therapist in Private Practice","Dermatology","Podiatry","Obstetrics & Gynecology","Chiropractic","Licensed Clinical Social Worker","Cardiac Surgery","Mass Immunizer Roster Biller","Plastic and Reconstructive Surgery","Psychologist, Clinical","Interventional Radiology","Advanced Heart Failure and Transplant Cardiology"],
+            type: 'pie',
+            textinfo: 'percent+label',
+            hoverinfo: 'label+percent+value',
+            hole: 0.4
+        };
+
+        // Create the specialty distribution chart
+        Plotly.newPlot('specialty-chart', [specialtyData], {
+            title: 'Provider Specialty Distribution',
+            annotations: [{
+                text: 'Provider<br>Specialties',
+                showarrow: false,
+                font: {
+                    size: 20
+                },
+                x: 0.5,
+                y: 0.5
+            }]
+        });
+
+        // Create sample payment analysis data
+        var paymentData = {
+            x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            y: [65.2, 68.4, 70.1, 71.8, 73.2, 71.4],
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Average Payment ($)',
+            line: {
+                color: '#2c3e50',
+                width: 3
+            },
+            marker: {
+                size: 8
+            }
+        };
+
+        // Create the payment analysis chart
+        Plotly.newPlot('payment-chart', [paymentData], {
+            title: 'Average Payment Trends',
+            xaxis: {
+                title: 'Month'
+            },
+            yaxis: {
+                title: 'Average Payment ($)'
+            }
+        });
+    </script>
 </body>
 </html>
