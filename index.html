@@ -3,374 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMS Data Analysis</title>
-    <script src="https://cdn.plot.ly/plotly-2.27.1.min.js"></script>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>CMS Data Analysis - Redirecting...</title>
+    <meta http-equiv="refresh" content="0; url=visualizations/index.html">
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
             background-color: #f5f5f5;
-        }
-        .header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px;
             text-align: center;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            padding-top: 50px;
         }
-        .stats-container {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .stat-box {
-            background-color: white;
-            border-radius: 5px;
-            padding: 15px;
-            width: 22%;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        .stat-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        .stat-label {
-            font-size: 14px;
-            color: #7f8c8d;
-        }
-        .chart-container {
-            background-color: white;
-            border-radius: 5px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .insight-box {
-            background-color: #eaf2f8;
-            border-left: 4px solid #3498db;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 5px 5px 0;
-        }
-        .management-insights {
+        .redirect-message {
             background-color: #2c3e50;
             color: white;
             padding: 20px;
             border-radius: 5px;
-            margin: 20px 0;
+            margin: 0 auto;
+            max-width: 600px;
         }
-        .insight-title {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .zoom-instructions {
-            font-size: 12px;
-            color: #7f8c8d;
-            font-style: italic;
-            margin-top: 5px;
-        }
-        .github-link {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #2c3e50;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
+        a {
+            color: #3498db;
             text-decoration: none;
             font-weight: bold;
         }
-        .github-link:hover {
-            background-color: #3498db;
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <a href="https://github.com/Aj-K-code/cms_analytics" class="github-link">View on GitHub</a>
-    
-    <div class="header">
-        <h1>CMS Data Analysis Dashboard</h1>
-        <p>Interactive visualizations of CMS provider data</p>
+    <div class="redirect-message">
+        <h1>Redirecting to CMS Analytics Dashboard</h1>
+        <p>If you are not automatically redirected, <a href="visualizations/index.html">click here</a> to view the CMS Analytics Dashboard.</p>
     </div>
-    
-    <div class="stats-container">
-        <div class="stat-box">
-            <div class="stat-value">929</div>
-            <div class="stat-label">Total Providers</div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-value">1,702,821</div>
-            <div class="stat-label">Total Services</div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-value">800,592</div>
-            <div class="stat-label">Total Beneficiaries</div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-value">$71.42</div>
-            <div class="stat-label">Average Payment</div>
-        </div>
-    </div>
-    
-    <div class="management-insights">
-        <h2>Executive Summary</h2>
-        <p>This dashboard provides key insights into provider performance, payment variations, and opportunities for optimization.</p>
-        <div class="insight-title">Key Findings:</div>
-        <ul>
-            <li>Identified significant payment variations between NY State and CommunityCare rates</li>
-            <li>Highlighted top-performing physicians compared to their specialty averages</li>
-            <li>Detected outliers in service volume and payment amounts that require attention</li>
-            <li>Quantified potential cost savings and revenue opportunities</li>
-        </ul>
-    </div>
-
-    <div class="chart-container">
-        <h2>Provider Specialty Distribution</h2>
-        <div class="zoom-instructions">Tip: Click and drag to zoom in. Double-click to reset zoom.</div>
-        <div id="specialty-chart" style="height:600px; width:100%;"></div>
-    </div>
-
-    <div class="chart-container">
-        <h2>Top Providers by Service Volume</h2>
-        <div id="top-providers-chart" style="height:600px; width:100%;"></div>
-    </div>
-
-    <div class="chart-container">
-        <h2>Top Services by Volume</h2>
-        <div id="top-services-chart" style="height:600px; width:100%;"></div>
-    </div>
-
-    <div class="chart-container">
-        <h2>Provider Service Volume vs. Payment Analysis</h2>
-        <div id="provider-metrics-chart" style="height:600px; width:100%;"></div>
-    </div>
-
-    <div class="chart-container">
-        <h2>Provider Performance Matrix</h2>
-        <div id="performance-matrix-chart" style="height:600px; width:100%;"></div>
-    </div>
-
-    <div class="chart-container">
-        <h2>Specialty Benchmarking</h2>
-        <div id="specialty-benchmarking-chart" style="height:600px; width:100%;"></div>
-    </div>
-
-    <div class="chart-container">
-        <h2>Quality Metrics Dashboard</h2>
-        <div id="quality-metrics-dashboard" style="height:800px; width:100%;"></div>
-    </div>
-
-    <div class="chart-container">
-        <h2>Correlation Analysis</h2>
-        <div class="zoom-instructions">Tip: Hover over the heatmap to see detailed correlations</div>
-        <img src="visualizations/correlation_heatmap.png" alt="Correlation Heatmap" style="width: 100%; max-width: 800px; margin: 20px auto; display: block;">
-        <div class="insight-box">
-            <div class="insight-title">Key Correlations:</div>
-            <ul>
-                <li>Strong positive correlation between service volume and total payments</li>
-                <li>Moderate correlation between beneficiary count and average payment</li>
-                <li>Weak correlation between specialty type and payment variations</li>
-            </ul>
-        </div>
-    </div>
-
-    <script>
-        // Load the data from CSV files
-        Promise.all([
-            d3.csv('results/provider_metrics.csv'),
-            d3.csv('results/top_services.csv'),
-            d3.csv('results/specialty_distribution.csv'),
-            d3.csv('results/quality_metrics.csv')
-        ]).then(function(data) {
-            const [providerMetrics, topServices, specialtyDist, qualityMetrics] = data;
-            
-            // Create specialty distribution chart
-            const specialtyData = {
-                values: specialtyDist.map(d => +d['Provider Count']),
-                labels: specialtyDist.map(d => d.Specialty),
-                type: 'pie',
-                textinfo: 'percent+label',
-                hoverinfo: 'label+percent+value',
-                hole: 0.4
-            };
-
-            Plotly.newPlot('specialty-chart', [specialtyData], {
-                title: 'Provider Specialty Distribution',
-                annotations: [{
-                    text: 'Provider<br>Specialties',
-                    showarrow: false,
-                    font: { size: 20 },
-                    x: 0.5,
-                    y: 0.5
-                }],
-                responsive: true
-            });
-
-            // Top Providers Chart
-            const topProviders = providerMetrics
-                .sort((a, b) => +b['Total Services'] - +a['Total Services'])
-                .slice(0, 10);
-
-            const topProvidersData = {
-                x: topProviders.map(d => +d['Total Services']),
-                y: topProviders.map(d => `${d['Last Name']}, ${d['First Name']}`),
-                type: 'bar',
-                orientation: 'h'
-            };
-
-            Plotly.newPlot('top-providers-chart', [topProvidersData], {
-                title: 'Top 10 Providers by Service Volume',
-                xaxis: { title: 'Total Services' },
-                yaxis: { 
-                    title: 'Provider Name',
-                    autorange: 'reversed'
-                },
-                responsive: true
-            });
-
-            // Top Services Chart
-            const topServicesData = {
-                x: topServices.slice(0, 10).map(d => +d['Total Services']),
-                y: topServices.slice(0, 10).map(d => d.Description),
-                type: 'bar',
-                orientation: 'h'
-            };
-
-            Plotly.newPlot('top-services-chart', [topServicesData], {
-                title: 'Top 10 Services by Volume',
-                xaxis: { title: 'Total Services' },
-                yaxis: { 
-                    title: 'Service Description',
-                    autorange: 'reversed'
-                },
-                responsive: true
-            });
-
-            // Provider Metrics Chart
-            const metricsData = {
-                x: providerMetrics.map(d => +d['Total Services']),
-                y: providerMetrics.map(d => +d['Avg Payment Amount']),
-                mode: 'markers',
-                type: 'scatter',
-                marker: {
-                    size: providerMetrics.map(d => +d['Total Beneficiaries'] / 100),
-                    color: providerMetrics.map(d => +d['Service Diversity']),
-                    colorscale: 'Viridis',
-                    showscale: true
-                },
-                text: providerMetrics.map(d => `${d['Last Name']}, ${d['First Name']}<br>Specialty: ${d.Specialty}`),
-                hovertemplate: '%{text}<br>Services: %{x}<br>Payment: $%{y:.2f}<extra></extra>'
-            };
-
-            Plotly.newPlot('provider-metrics-chart', [metricsData], {
-                title: 'Provider Service Volume vs. Payment',
-                xaxis: { title: 'Total Services' },
-                yaxis: { title: 'Average Payment ($)' },
-                responsive: true
-            });
-
-            // Performance Matrix
-            const performanceData = {
-                x: providerMetrics.map(d => (+d['Total Services'] / +d['Total Beneficiaries']) * 100),
-                y: providerMetrics.map(d => +d['Service Diversity']),
-                mode: 'markers',
-                type: 'scatter',
-                marker: {
-                    size: providerMetrics.map(d => +d['Avg Payment Amount'] / 10),
-                    color: providerMetrics.map(d => +d['Total Services']),
-                    colorscale: 'Viridis',
-                    showscale: true
-                },
-                text: providerMetrics.map(d => `${d['Last Name']}, ${d['First Name']}<br>Specialty: ${d.Specialty}`),
-                hovertemplate: '%{text}<br>Efficiency: %{x:.1f}%<br>Service Diversity: %{y}<extra></extra>'
-            };
-
-            Plotly.newPlot('performance-matrix-chart', [performanceData], {
-                title: 'Provider Performance Matrix',
-                xaxis: { title: 'Efficiency Score (%)' },
-                yaxis: { title: 'Service Diversity Score' },
-                responsive: true
-            });
-
-            // Specialty Benchmarking
-            const specialtyMetrics = d3.group(providerMetrics, d => d.Specialty);
-            const topSpecialties = Array.from(specialtyMetrics)
-                .map(([specialty, providers]) => ({
-                    specialty,
-                    avgServices: d3.mean(providers, d => +d['Total Services']),
-                    avgPayment: d3.mean(providers, d => +d['Avg Payment Amount'])
-                }))
-                .sort((a, b) => b.avgServices - a.avgServices)
-                .slice(0, 5);
-
-            const benchmarkData = [{
-                x: topSpecialties.map(d => d.specialty),
-                y: topSpecialties.map(d => d.avgServices),
-                name: 'Avg Services',
-                type: 'bar'
-            }, {
-                x: topSpecialties.map(d => d.specialty),
-                y: topSpecialties.map(d => d.avgPayment),
-                name: 'Avg Payment',
-                type: 'bar'
-            }];
-
-            Plotly.newPlot('specialty-benchmarking-chart', benchmarkData, {
-                title: 'Specialty Benchmarking',
-                barmode: 'group',
-                xaxis: { title: 'Specialty' },
-                yaxis: { title: 'Value' },
-                responsive: true
-            });
-
-            // Quality Metrics Dashboard
-            const serviceDiversity = providerMetrics.map(d => +d['Service Diversity']);
-            const efficiencyScores = providerMetrics.map(d => (+d['Total Services'] / +d['Total Beneficiaries']) * 100);
-            const servicesPerBeneficiary = providerMetrics.map(d => +d['Total Services'] / +d['Total Beneficiaries']);
-            
-            const topQualityProviders = providerMetrics
-                .sort((a, b) => +b['Service Diversity'] - +a['Service Diversity'])
-                .slice(0, 5);
-
-            const trace1 = {
-                x: serviceDiversity,
-                type: 'histogram',
-                name: 'Service Diversity'
-            };
-
-            const trace2 = {
-                x: efficiencyScores,
-                y: serviceDiversity,
-                mode: 'markers',
-                type: 'scatter',
-                name: 'Diversity vs Efficiency'
-            };
-
-            const trace3 = {
-                y: servicesPerBeneficiary,
-                type: 'box',
-                name: 'Services per Beneficiary'
-            };
-
-            const trace4 = {
-                x: topQualityProviders.map(d => `${d['Last Name']}, ${d['First Name']}`),
-                y: topQualityProviders.map(d => +d['Service Diversity']),
-                type: 'bar',
-                name: 'Top Diverse Providers'
-            };
-
-            Plotly.newPlot('quality-metrics-dashboard', [trace1, trace2, trace3, trace4], {
-                title: 'Provider Service Analysis',
-                grid: {rows: 2, columns: 2, pattern: 'independent'},
-                responsive: true
-            });
-        }).catch(function(error) {
-            console.error('Error loading the data:', error);
-        });
-    </script>
 </body>
 </html>
